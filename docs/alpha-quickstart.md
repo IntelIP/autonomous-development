@@ -21,7 +21,7 @@ Select one runtime per ticket. Up to two engineers use that runtime on separate 
 | Runtime | Adapter | Live evidence | Remaining validation |
 |---|---|---|---|
 | Pi | Managed full stack or native minimal | Real supervised product work passed checks and lead review; a draft PR was published | Human product review and unattended reliability |
-| Codex | Native CLI | Real implementation and one repair passed checks; lead rejected both | Accepted product result and draft PR; this trial exhausted its repair allowance |
+| Codex | Native CLI | Published alpha.3 source and a generic worker produced a checked, lead-approved synthetic fix and draft PR; earlier product trials were rejected | Accepted product result and unattended reliability |
 | Claude Code | Native CLI | Local Ollama generated code; after supervised resumption of the paused repair, all checks passed and lead review rejected a remaining evidence-identity flaw | Accepted product result and draft PR; this trial exhausted its repair allowance |
 | OpenCode | Native CLI | Existing Codex subscription; implementation and repair passed independent checks, then lead rejected the final result | Accepted product result and draft PR; this trial exhausted its repair allowance |
 
@@ -39,11 +39,11 @@ See [native trial evidence](native-agent-trials.md). These supervised runs demon
 
 ## Prerequisites
 
-Use Linux or Windows WSL with Python 3.11+, Git, Docker, and authenticated GitHub CLI. The controller uses Linux ownership and `fcntl`; direct macOS execution is unvalidated. The Mac can remain the planning and review machine.
+Use Linux or Windows WSL with Python 3.11+, Git, Docker, OpenSSH client tools (`ssh` and `scp`), and authenticated GitHub CLI. OpenShell uploads require those client tools in the controller environment too. The controller uses Linux ownership and `fcntl`; direct macOS execution is unvalidated. The Mac can remain the planning and review machine.
 
 NemoClaw/OpenClaw and OpenShell must already be installed and healthy. Configure `controller/lead.json` for your existing lead agent/provider/model. The bundle does not install that infrastructure or create accounts. Existing personal logins do not establish enterprise account suitability or redistribution rights.
 
-This bundle is for private review. Project source uses [Apache License 2.0](../LICENSE); Third-party runtimes retain their own terms. Third-party CLIs retain their own licenses and account terms.
+This is an experimental public source release. Project source uses [Apache License 2.0](../LICENSE). Third-party runtimes retain their own licenses and account terms.
 
 ## Build a native image
 
@@ -86,6 +86,14 @@ Claude Code may use its native settings file for an existing compatible gateway 
 The container runs as UID 1000. Its cache must be readable and writable by that user for native token refresh. Keep it outside repositories and images. Do not mount your entire home or GitHub/SSH credentials. Keychain-only credentials require runtime-supported container authentication; copying an empty cache is insufficient. Docker bridge networking permits provider access; outbound allowlisting is not implemented.
 
 ## Seed and run
+
+Prepare the lead's upload directory after creating or rebuilding its sandbox:
+
+```sh
+"$AD_NEMOCLAW" "$AD_SANDBOX" exec -- mkdir -p /sandbox/autonomous-requests
+```
+
+If the controller runs in a container, give it its own writable OpenShell connection configuration. NemoClaw selects the gateway and OpenShell updates configuration permissions; a read-only configuration mount fails. Keep credentials private and outside the source bundle. See [the published-source demo result](published-source-demo.md) for the tested boundary and setup repairs.
 
 ```sh
 python3 scripts/prepare-demo.py --directory /srv/ad-demo --github-repository YOUR_OWNER/YOUR_DEMO_REPO --stack-root "$PWD" --agent codex --model gpt-6-sol --image ad-worker:codex-0.155.1 --workflow bugfix
