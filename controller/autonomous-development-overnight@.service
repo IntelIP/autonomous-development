@@ -1,0 +1,24 @@
+[Unit]
+Description=One dated Autonomous Development pilot (%i)
+After=network-online.target docker.service
+Wants=network-online.target
+Requires=docker.service
+StartLimitIntervalSec=7200
+StartLimitBurst=2
+
+[Service]
+Type=oneshot
+User=root
+SetLoginEnvironment=yes
+Environment=HOME=/root
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+WorkingDirectory=/opt/AutonomousDevelopment
+ExecStartPre=/usr/bin/python3 /opt/AutonomousDevelopment/controller/control.py recover
+ExecStart=/usr/bin/python3 /opt/AutonomousDevelopment/controller/overnight.py --schedule /var/lib/autonomous-development/overnight/%i.json
+ExecStopPost=/usr/bin/python3 /opt/AutonomousDevelopment/controller/control.py recover
+Restart=on-failure
+RestartSec=5
+TimeoutStartSec=3600
+TimeoutStopSec=20
+KillMode=control-group
+UMask=0077

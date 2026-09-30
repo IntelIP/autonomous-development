@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2026 Hudson Aikins / IntelIP
+# SPDX-License-Identifier: Apache-2.0
+ARG BASE_IMAGE=node:22.22.0-bookworm-slim
+FROM ${BASE_IMAGE}
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends python3 git ripgrep ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+# Install exactly one operator-selected native CLI. Supply a reviewed, pinned version.
+ARG AGENT=pi
+ARG AGENT_VERSION
+RUN test -n "$AGENT_VERSION" && case "$AGENT" in \
+    pi) package=@earendil-works/pi-coding-agent ;; \
+    codex) package=@openai/codex ;; \
+    claude-code) package=@anthropic-ai/claude-code ;; \
+    opencode) package=opencode-ai ;; \
+    *) exit 2 ;; esac && npm install -g "$package@$AGENT_VERSION" --no-audit --no-fund
+USER node
+WORKDIR /workspace
+# run-worker.py chooses the native entrypoint and enforces the outer container boundary.
+ENTRYPOINT ["python3"]

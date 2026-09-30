@@ -1,0 +1,5 @@
+{
+  "agent": "autonomous-lead-codex",
+  "provider": "pi-subscription",
+  "model": "gpt-6-sol"
+}

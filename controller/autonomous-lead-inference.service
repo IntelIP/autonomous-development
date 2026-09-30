@@ -1,0 +1,15 @@
+[Unit]
+Description=Pi subscription inference for the NemoClaw engineering lead
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+EnvironmentFile=/var/lib/autonomous-development/lead-inference.env
+ExecStart=/usr/bin/python3 /opt/AutonomousDevelopment/controller/pi_inference.py --bind ${AD_INFERENCE_BIND} --port 19110 --token-file /var/lib/autonomous-development/auth/pi-bridge.token --auth-dir /var/lib/autonomous-development/auth
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=15
+
+[Install]
+WantedBy=multi-user.target
