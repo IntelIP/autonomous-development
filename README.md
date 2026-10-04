@@ -47,6 +47,8 @@ Pi's full profile uses its existing extensions. Other agents keep their own tool
 
 ## Support and license
 
+This is the canonical development repository for Autonomous Development. Controller tests, source packaging, operating services, and the preserved synthetic demo are maintained here. Run `python3 scripts/validate-poc.py` and `bash scripts/check-dead-code.sh` before opening a pull request; GitHub runs these checks on pull requests and on `main`.
+
 Maintained by Hudson Aikins / IntelIP. Use [issues](https://github.com/IntelIP/autonomous-development/issues) for redacted bugs and reproducible examples. No response-time or production-support commitment is made. See [SECURITY.md](SECURITY.md) for sensitive reports.
 
 Project source and the five explicitly identified bundled worker files use [Apache License 2.0](LICENSE). The export contains no private ticket records, account caches, or private repository history.

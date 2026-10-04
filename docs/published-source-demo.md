@@ -8,7 +8,7 @@ The published alpha.3 controller and a freshly built generic Codex worker comple
 - Run: `bdb59c6b615c63bf`, September 30, 02:01:20–02:02:22 UTC.
 - Independent check: `python3 checks.py`, exit 0. Empty, positive, and mixed-sign examples passed.
 - Lead review: approved commit `4e77b8d42fe474c0a83e84e25f4c5eea8f776add`, no findings.
-- Result: [draft PR #1](https://github.com/IntelIP/autonomous-development-alpha-demo/pull/1), one line changed in `sample.py`. Human merge authority retained.
+- Result: a draft PR with one line changed in `sample.py`, subsequently merged by the operator on September 29 at 10:40 PM Eastern. The [fixture, repair diff, and historical receipt](../tests/fixtures/published-demo/receipt.json) preserve the result in this repository. Human merge authority retained.
 
 ## Operator repairs before success
 

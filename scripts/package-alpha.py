@@ -19,6 +19,15 @@ CONTROLLER = (
     'README.md', 'CONTRIBUTING.md', 'SECURITY.md', 'docs/releases.md',
     'docs/executable-tickets.md', 'docs/engineering.md', 'docs/overnight-pilot.md',
     'controller/overnight.py', 'controller/autonomous-development-overnight@.service',
+    'controller/autonomous-development.service', 'controller/autonomous-development.timer',
+    'controller/autonomous-development-pilot@.service',
+    'scripts/validate-poc.py', 'scripts/check-dead-code.sh', 'tabellio.validation.json',
+    '.github/workflows/product-validation.yml', '.github/workflows/dead-code.yml',
+    'tests/test_control.py', 'tests/test_engineering.py', 'tests/test_overnight.py',
+    'tests/test_package.py', 'tests/test_pi_inference.py', 'tests/test_portable_runtime.py',
+    'tests/test_recovery.py', 'tests/lead_gateway.test.mjs',
+    'tests/fixtures/published-demo/sample.py', 'tests/fixtures/published-demo/checks.py',
+    'tests/fixtures/published-demo/repair.patch', 'tests/fixtures/published-demo/receipt.json',
 )
 WORKER = (
     'agent/run-worker.py', 'agent/worker_protocol.py', 'agent/Dockerfile.runtime',

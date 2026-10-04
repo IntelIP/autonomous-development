@@ -1,0 +1,11 @@
+[Unit]
+Description=Check approved Autonomous Development queue
+
+[Timer]
+OnBootSec=2min
+OnCalendar=*-*-* *:0/15:00 America/New_York
+Persistent=true
+Unit=autonomous-development.service
+
+[Install]
+WantedBy=timers.target
