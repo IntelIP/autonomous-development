@@ -1,0 +1,18 @@
+[Unit]
+Description=Autonomous Development supervised approved packet %i
+After=network-online.target docker.service
+Wants=network-online.target
+Requires=docker.service
+
+[Service]
+Type=oneshot
+User=root
+SetLoginEnvironment=yes
+Environment=PATH=/usr/local/bin:/usr/bin:/bin
+WorkingDirectory=/opt/AutonomousDevelopment
+ExecStartPre=/usr/bin/python3 /opt/AutonomousDevelopment/controller/control.py recover
+ExecStart=/usr/bin/python3 /opt/AutonomousDevelopment/controller/engineering.py run --pilot --packet /var/lib/autonomous-development/queue/%i.json
+ExecStopPost=/usr/bin/python3 /opt/AutonomousDevelopment/controller/control.py recover
+TimeoutStartSec=3670
+KillMode=control-group
+UMask=0077

@@ -1,0 +1,41 @@
+name: Product validation
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: python3 scripts/validate-poc.py
+      - name: Preserve exact-commit validation receipt
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          result = Path('.evidence/result.json')
+          if not result.is_file():
+              raise SystemExit('Required exact-commit receipt is missing')
+          data = json.loads(result.read_text())
+          text = '## Product validation\n\n```json\n' + json.dumps(data, indent=2) + '\n```\n'
+          with open(os.environ['GITHUB_STEP_SUMMARY'], 'a') as summary:
+              summary.write(text)
+          print(text)
+          for validator in data['validators']:
+              if validator['status'] != 'passed':
+                  print(Path(validator['log']).read_text())
+          PY

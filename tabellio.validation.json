@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "tabellio-validation/v0.2",
+  "id": "autonomous-development-consolidation",
+  "requireEntireCheckpoint": false,
+  "failFast": true,
+  "acceptance": {
+    "id": "single-maintained-public-repository",
+    "source": "README.md",
+    "risk": "medium",
+    "outcomes": [
+      "Controller regression and authority checks remain runnable in the public source",
+      "The historical synthetic repair and its checks remain reproducible locally",
+      "Source releases preserve the maintenance tools and checks"
+    ],
+    "invariants": [
+      "Human approval of exact execution packets",
+      "Human merge and deployment authority",
+      "No private ticket or account-cache publication",
+      "No model calls or paid validation runs"
+    ],
+    "forbiddenOutcomes": [
+      "Lost outstanding website work",
+      "Silent approval changes",
+      "Deletion before runtime and hosted checks pass"
+    ],
+    "requiredValidatorTypes": [
+      "static"
+    ]
+  },
+  "validators": [
+    {
+      "id": "controller-contract",
+      "type": "static",
+      "argv": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "cwd": ".",
+      "timeoutMs": 180000,
+      "required": true,
+      "evidence": {
+        "path": ".evidence/controller-contract.json"
+      },
+      "policy": {
+        "metricThresholds": [],
+        "maxCostUsd": null,
+        "requireCostTelemetry": false
+      }
+    },
+    {
+      "id": "source-compilation",
+      "type": "static",
+      "argv": [
+        "python3",
+        "-c",
+        "import pathlib,py_compile; [py_compile.compile(str(p),doraise=True) for name in ('controller','agent','scripts') for p in pathlib.Path(name).rglob('*.py')]"
+      ],
+      "cwd": ".",
+      "timeoutMs": 60000,
+      "required": true,
+      "evidence": {
+        "path": ".evidence/source-compilation.json"
+      },
+      "policy": {
+        "metricThresholds": [],
+        "maxCostUsd": null,
+        "requireCostTelemetry": false
+      }
+    },
+    {
+      "id": "preserved-demo",
+      "type": "static",
+      "argv": [
+        "python3",
+        "tests/fixtures/published-demo/checks.py"
+      ],
+      "cwd": ".",
+      "timeoutMs": 30000,
+      "required": true,
+      "evidence": {
+        "path": ".evidence/preserved-demo.json"
+      },
+      "policy": {
+        "metricThresholds": [],
+        "maxCostUsd": null,
+        "requireCostTelemetry": false
+      }
+    }
+  ]
+}

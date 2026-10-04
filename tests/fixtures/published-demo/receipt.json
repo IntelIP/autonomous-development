@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "classification": "historical supervised synthetic workflow",
+  "sourceRepository": "IntelIP/autonomous-development-alpha-demo",
+  "seedCommit": "27d73c9fbd580df35a2a69aa2fb2044e0563426f",
+  "candidateCommit": "4e77b8d42fe474c0a83e84e25f4c5eea8f776add",
+  "mergedCommit": "5ed0e14fd4e57b6ea63d4026bbe8ffd3a77fc2bc",
+  "createdAt": "2026-09-30T02:02:22Z",
+  "mergedAt": "2026-09-30T02:40:59Z",
+  "originalPullRequestUrl": "https://github.com/IntelIP/autonomous-development-alpha-demo/pull/1",
+  "runId": "bdb59c6b615c63bf",
+  "controllerSource": "8a6c8f029fedb0947c080dbbe3641e0b2411a60b",
+  "worker": {
+    "runtime": "Codex",
+    "version": "0.155.1",
+    "model": "gpt-6-sol",
+    "profile": "minimal"
+  },
+  "leadReview": {
+    "approved": true,
+    "headSha": "4e77b8d42fe474c0a83e84e25f4c5eea8f776add"
+  },
+  "checks": {
+    "command": [
+      "python3",
+      "checks.py"
+    ],
+    "exitCode": 0,
+    "cases": [
+      "empty",
+      "positive integers",
+      "mixed-sign integers"
+    ]
+  },
+  "limitations": [
+    "Existing authenticated Windows WSL host",
+    "Operator setup repairs required",
+    "Synthetic example; not a fresh-host or repeated-reliability claim"
+  ],
+  "recordSource": "Published source demo record and exported GitHub PR metadata"
+}
